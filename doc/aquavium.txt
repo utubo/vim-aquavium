@@ -7,7 +7,7 @@ aquavium#Show([{option}])
 
 aquavium#TabPanel([{option}]): string
 	You can set this to &tabpanel
-	e.g. `set tabpanel=#!aquavium#TabPanel()`
+	e.g. `set tabpanel=%!aquavium#TabPanel()`
 
 aquavium#TabPanelPart([{option}]): string
 	You can use this in your tabpanel function.
