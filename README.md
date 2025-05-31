@@ -2,7 +2,7 @@
 
 (Requirements Vim9.1 and +tabpanel)
 
-## Show 🐟 in current window!
+## Show 🐟 in the current window!
 ![image](https://github.com/user-attachments/assets/5960e264-6475-4415-91dc-398c22eb0957)
 
 ```vim

@@ -3,10 +3,10 @@
 Functions:
 
 aquavium#Show([{option}])
-	Show 🐟 in current window.
+	Show 🐟 in the current window.
 
 aquavium#TabPanel([{option}]): string
-	You can set this to &tabpanel
+	You can set this to 'tabpanel'
 	e.g. `set tabpanel=%!aquavium#TabPanel()`
 
 aquavium#TabPanelPart([{option}]): string
