@@ -43,7 +43,7 @@ def! g:YourTabPanel(): string
   endif
   return label
 enddef
-set tabpanel=#!g:YourTabPanel()
+set tabpanel=%!g:YourTabPanel()
 set showtabpanel=2
 ```
 
