@@ -28,13 +28,18 @@ augroup END
 
 # Timer {{{
 var winids = []
-def Timer(_: number)
-  if !!tabp_cache
-    redrawtabpanel
-  endif
-  for w in winids->copy()
-    UpdateWindow(w)
-  endfor
+def Timer(t: number)
+  try
+    if !!tabp_cache
+      redrawtabpanel
+    endif
+    for w in winids->copy()
+      UpdateWindow(w)
+    endfor
+  catch
+    timer_stop(t)
+    throw v:exception
+  endtry
 enddef
 
 const timer = get(g:, 'aquavium_timer', 0)
