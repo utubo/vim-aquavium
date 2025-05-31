@@ -12,7 +12,7 @@ call aquavium#Show()
 
 The tank is a buffer, so you can close aquavium with `:q` or `:bd %` or, among others.
 
-Also you can see 🐟 in popup window.
+## Also you can see 🐟 in popup window.
 
 ```vim
 vim9script
@@ -21,7 +21,7 @@ win_execute(winid, 'call aquavium#Show()')
 ```
 ![image](https://github.com/user-attachments/assets/8e7e83b2-3990-473b-a5ef-986d41be69b7)
 
-And in tabpanel.
+## And in tabpanel.
 
 ```vim
 set tabpanel=%!aquavium#TabPanel()
