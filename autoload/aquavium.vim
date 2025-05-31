@@ -38,20 +38,22 @@ def Timer(t: number)
     endfor
   catch
     timer_stop(t)
-    throw v:exception
+    g:aquavium_err = $"{v:exception}\n{v:throwpoint}"
   endtry
 enddef
 
-const timer = get(g:, 'aquavium_timer', 0)
-if !!timer
-  timer_stop(timer)
-endif
+def TimerStart()
+  const timer = get(g:, 'aquavium_timer', 0)
+  if !!timer
+    timer_stop(timer)
+  endif
 
-g:aquavium_timer = timer_start(
-  float2nr(INTERVAL * 1000),
-  Timer,
-  { repeat: -1 }
-)
+  g:aquavium_timer = timer_start(
+    float2nr(INTERVAL * 1000),
+    Timer,
+    { repeat: -1 }
+  )
+enddef
 # }}}
 
 # Main {{{
@@ -74,9 +76,18 @@ def Rendar(bufnr: number, options: dict<any> = {}): list<string>
   MoveFish(params)
   options->extend(params)
   var tank = [' '->repeat(params.width)]->repeat(params.height)
-  for fish in params.fish
-    tank[fish.y] = tank[fish.y]
-      ->substitute($'\%{fish.x}v.\+\%{fish.x + fish.w}v', fish.char, '')
+  var removes = []
+  for i in params.fish->len()->range()
+    var fish = params.fish[i]
+    if fish.y < params.height
+      tank[fish.y] = tank[fish.y]
+        ->substitute($'\%{fish.x}v.\+\%{fish.x + fish.w}v', fish.char, '')
+    else
+      removes->add(i)
+    endif
+  endfor
+  for i in removes->reverse()
+    params.fish->remove(i)
   endfor
   const tranc = $'\%{params.width + 1}v.*'
   for i in tank->len()->range()
@@ -196,6 +207,7 @@ export def Show(options: dict<any> = {})
   setwinvar(w, 'aquavium', params)
   UpdateWindow(w)
   winids->add(w)
+  TimerStart()
 enddef
 
 def ColorWindow(winid: number)
@@ -228,6 +240,7 @@ def UpdateWindow(w: number)
     i += 1
     setbufline(info.bufnr, i, t)
   endfor
+  deletebufline(info.bufnr, i + 1)
   win_execute(w, 'setlocal nomodified')
 enddef
 # }}}
@@ -258,6 +271,7 @@ export def TabPanelPart(options: dict<any> = {}): string
     const height = get(options, 'height', 0) ?? &lines - &cmdheight
     if tabp_params->empty()
       tabp_params = InitParams(options)
+      TimerStart()
     endif
     var params = tabp_params
     params.width = width
