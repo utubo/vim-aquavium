@@ -241,25 +241,29 @@ export def TabPanel(options: dict<any> = {}): string
 enddef
 
 export def TabPanelPart(options: dict<any> = {}): string
-  if !tabp_params->empty()
-    const tick = reltime(tabp_tick)->reltimefloat()
-    if tick < INTERVAL
-      return tabp_cache
+  try
+    if !tabp_params->empty()
+      const tick = reltime(tabp_tick)->reltimefloat()
+      if tick < INTERVAL
+        return tabp_cache
+      endif
     endif
-  endif
-  tabp_tick = reltime()
-  const width = TabPanelWidth()
-  const height = get(options, 'height', 0) ?? &lines - &cmdheight
-  if tabp_params->empty()
-    tabp_params = InitParams(options)
-  endif
-  var params = tabp_params
-  params.width = width
-  params.height = height
-  const tank = Rendar(-1, params)
-  tabp_cache = tank
-    ->ColoredForTabPanel()
-    ->join("\n")
+    tabp_tick = reltime()
+    const width = TabPanelWidth()
+    const height = get(options, 'height', 0) ?? &lines - &cmdheight
+    if tabp_params->empty()
+      tabp_params = InitParams(options)
+    endif
+    var params = tabp_params
+    params.width = width
+    params.height = height
+    const tank = Rendar(-1, params)
+    tabp_cache = tank
+      ->ColoredForTabPanel()
+      ->join("\n")
+  catch
+    return $'{v:exception}'
+  endtry
   return tabp_cache
 enddef
 
