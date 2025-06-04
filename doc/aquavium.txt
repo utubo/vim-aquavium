@@ -16,6 +16,17 @@ aquavium#TabPanelPart([{option}]): string
 	height:	The height. Default is window height.
 	width:	The width. Default is window width.
 
+HighLight
+
+Aquavium
+	Background color.
+
+AquaviumB
+	Blue.
+
+AquaviumR
+	Red.
+
 License:
 
 NYSL 0.9982

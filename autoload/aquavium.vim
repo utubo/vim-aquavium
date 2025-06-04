@@ -12,10 +12,10 @@ const FISH_TYPES = [
 
 # Color {{{
 def ColorScheme()
-  hi Aquarium  guibg=#0096db ctermbg=39
-  hi AquariumB guibg=#0096db ctermbg=39 guifg=#005fd7 ctermfg=26
-  hi AquariumR guibg=#0096db ctermbg=39 guifg=#af0000 ctermfg=124
-  # hi AquariumY ctermbg=39 ctermfg=221
+  hi default Aquavium  guibg=#0096db ctermbg=39
+  hi default AquaviumB guibg=#0096db ctermbg=39 guifg=#005fd7 ctermfg=26
+  hi default AquaviumR guibg=#0096db ctermbg=39 guifg=#af0000 ctermfg=124
+  # hi AquaviumY ctermbg=39 ctermfg=221
 enddef
 
 ColorScheme()
@@ -211,9 +211,9 @@ export def Show(options: dict<any> = {})
 enddef
 
 def ColorWindow(winid: number)
-  win_execute(winid, 'syntax match Aquarium / /')
+  win_execute(winid, 'syntax match Aquavium / /')
   for t in FISH_TYPES
-    win_execute(winid, $'syntax keyword Aquarium{t.hi} {t.char}')
+    win_execute(winid, $'syntax keyword Aquavium{t.hi} {t.char}')
   endfor
   win_execute(winid, 'setlocal nolist nocursorline nocursorcolumn')
 enddef
@@ -300,11 +300,11 @@ def ColoredForTabPanel(src: list<string>): list<string>
   var colored = []
   for s in src
     var c = s
-      ->substitute("^", '%#Aquarium#', '')
+      ->substitute("^", '%#Aquavium#', '')
     for t in FISH_TYPES
       c = c->substitute(
         t.char,
-        $'%#Aquarium{t.hi}#{t.char}%#Aquarium#',
+        $'%#Aquavium{t.hi}#{t.char}%#Aquavium#',
         'g'
       )
     endfor
